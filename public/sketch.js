@@ -178,9 +178,9 @@ function drawStage3() {
   background(0);
   tint(255, 127);
   if (activePersonIndex > 0) {
-    image(bgImg2Gray, 0, 0, windowWidth, windowHeight);
+    image(bgImg3Gray, 0, 0, windowWidth, windowHeight);
   } else {
-    image(bgImg2, 0, 0, windowWidth, windowHeight);
+    image(bgImg3, 0, 0, windowWidth, windowHeight);
   }
   tint(255, 255);
 
