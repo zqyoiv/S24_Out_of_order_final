@@ -8,9 +8,9 @@ let totalNumberOfStages = 5;
 
 function preload() {
   // Preload images
-  bgImg1 = loadImage('./asset/bg1.jpeg');
-  bgImg2 = loadImage('./asset/bg2.jpeg');
-  bgImg3 = loadImage('./asset/bg3.jpeg');
+  bgImg1 = loadImage('./asset/bg1.png');
+  bgImg2 = loadImage('./asset/bg2.png');
+  bgImg3 = loadImage('./asset/bg3.png');
   potImg = loadImage('./asset/pot.gif');
   priestessImg = loadImage('./asset/p1.png');
   villagerImg = loadImage('./asset/p2.png');
@@ -72,9 +72,11 @@ function drawStart() {
   text(line4, width / 2, height / 4 + 96);
   text(line5, width / 2, height / 4 + 128);
 
-  // pot
-  image(potImg, 0.38 * width, 0.4 * height,
-        potImg.width * 0.6, potImg.height * 0.6);
+  // pot image
+  sizeParam = 0.6;
+  image(potImg, 0.5 * width - potImg.width * sizeParam / 2, 
+                0.6 * height - potImg.height * sizeParam / 2, 
+        potImg.width * sizeParam, potImg.height * sizeParam);
 }
 
 function drawStage1() {
@@ -133,8 +135,10 @@ function drawEnd() {
   text(line2, width / 2, height / 4 + 32);
   text(line3, width / 2, height / 4 + 64);
 
-  image(potImg, 0.36 * width, 0.33 * height,
-    potImg.width * 0.6, potImg.height * 0.6);
+  sizeParam = 0.6;
+  image(potImg, 0.5 * width - potImg.width * sizeParam / 2, 
+                0.5 * height - potImg.height * sizeParam / 2, 
+        potImg.width * sizeParam, potImg.height * sizeParam);
 }
 
 function keyPressed() {
@@ -167,17 +171,18 @@ function nextStage() {
 }
 
 function mouseMoved() {
-  if (stageNumber == 0) {
-    if (isMouseOverIntro(mouseX, mouseY)) {
+  // Start and End stage.
+  if (stageNumber == 0 || stageNumber == 4) {
+    if (isMouseOverPot(mouseX, mouseY)) {
       cursor(HAND);
     } else {
       cursor(ARROW);
     }
   } else {
     // when the mouse is hover over 3 person image, show hand cursor and handle clicking event.
-    if (isMouseOverPerson(1, mouseX, mouseY) ||
-      isMouseOverPerson(2, mouseX, mouseY) ||
-      isMouseOverPerson(3, mouseX, mouseY)) {
+    if (isMouseOverPerson1(mouseX, mouseY) ||
+      isMouseOverPerson2(mouseX, mouseY) ||
+      isMouseOverPerson3(mouseX, mouseY)) {
       cursor(HAND);
     } else {
       cursor(ARROW);
@@ -190,28 +195,53 @@ function mousePressed() {
   let yPercent = (mouseY / windowHeight) * 100; 
   console.log(`X: ${xPercent.toFixed(2)}%, Y: ${yPercent.toFixed(2)}%`);
   
-  if (isMouseOverPerson(1, mouseX, mouseY)) {
-    stopCurrentSound();
-    playPersonStory(1, stageNumber);
-  } else if (isMouseOverPerson(2, mouseX, mouseY)) {
-    stopCurrentSound();
-    playPersonStory(2, stageNumber);
-  } else if (isMouseOverPerson(3, mouseX, mouseY)) {
-    stopCurrentSound();
-    playPersonStory(3, stageNumber);
+  // Start and End stage.
+  if (stageNumber == 0 || stageNumber == 4) {
+    if (isMouseOverPot(mouseX, mouseY)) {
+      nextStage();
+    }
+  } else {
+    if (isMouseOverPerson1(mouseX, mouseY)) {
+      stopCurrentSound();
+      playPersonStory(1, stageNumber);
+    } else if (isMouseOverPerson2(mouseX, mouseY)) {
+      stopCurrentSound();
+      playPersonStory(2, stageNumber);
+    } else if (isMouseOverPerson3(mouseX, mouseY)) {
+      stopCurrentSound();
+      playPersonStory(3, stageNumber);
+    }
+  }
+}
+
+function isMouseOverPot(mouseX, mouseY) {
+  sizeParam = 0.6;
+
+  if (stageNumber == 0) {
+    if (mouseX > 0.5 * width - potImg.width * sizeParam / 2 &&
+        mouseX < 0.5 * width + potImg.width * sizeParam / 2 &&
+        mouseY > 0.6 * height - potImg.height * sizeParam / 2 &&
+        mouseY < 0.6 * height + potImg.height * sizeParam / 2) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if (stageNumber == 4) {
+    if (mouseX > 0.5 * width - potImg.width * sizeParam / 2 &&
+        mouseX < 0.5 * width + potImg.width * sizeParam / 2 &&
+        mouseY > 0.5 * height - potImg.height * sizeParam / 2 &&
+        mouseY < 0.5 * height + potImg.height * sizeParam / 2) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
 function isMouseOverPerson(personIndex, mouseX, mouseY) {
   switch (personIndex) {
     case 1:
-      if (mouseX > 0 && mouseX < priestessImg.width * 0.5 &&
-        mouseY > 0 && mouseY < priestessImg.height * 0.5) {
-        return true;
-      } else {
-        return false;
-      }
-      break;
+      return isMouseOverPerson1(mouseX, mouseY);
     case 2:
       if (mouseX > width - villagerImg.width && mouseX < width - villagerImg.width * 0.5 &&
         mouseY > 0 && mouseY < villagerImg.height * 0.5) {
@@ -225,6 +255,129 @@ function isMouseOverPerson(personIndex, mouseX, mouseY) {
       minY = height - rebelImg.height;
       maxX = minX + rebelImg.width * 0.5;
       maxY = minY + rebelImg.height * 0.5;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+  }
+}
+
+function isMouseOverPerson1(mouseX, mouseY) {
+  switch (stageNumber) {
+    case 1:
+      sizeParam1 = 0.16;
+      minX = 0.73 * windowWidth;
+      minY = 0.35 * windowHeight;
+      maxX = minX + priestessImg.width * sizeParam1;
+      maxY = minY + priestessImg.height * sizeParam1;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+    case 2:
+      sizeParam1 = 0.18;
+      minX = 0.1 * windowWidth;
+      minY = 0.24 * windowHeight;
+      maxX = minX + priestessImg.width * sizeParam1;
+      maxY = minY + priestessImg.height * sizeParam1;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+    case 3:
+      sizeParam1 = 0.16;
+      minX = 0.42 * windowWidth;
+      minY = 0.07 * windowHeight;
+      maxX = minX + priestessImg.width * sizeParam1;
+      maxY = minY + priestessImg.height * sizeParam1;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;  
+  }
+}
+
+function isMouseOverPerson2(mouseX, mouseY) {
+  switch (stageNumber) {
+    case 1:
+      sizeParam2 = 0.15;
+      minX = 0.55 * windowWidth;
+      minY = 0.54 * windowHeight;
+      maxX = minX + villagerImg.width * sizeParam2;
+      maxY = minY + villagerImg.height * sizeParam2;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+    case 2:
+      sizeParam2 = 0.2;
+      minX = 0.65 * windowWidth;
+      minY = 0.15 * windowHeight;
+      maxX = minX + villagerImg.width * sizeParam2;
+      maxY = minY + villagerImg.height * sizeParam2;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+    case 3:
+      sizeParam2 = 0.2;
+      minX = 0.65 * windowWidth;
+      minY = 0.15 * windowHeight;
+      maxX = minX + villagerImg.width * sizeParam2;
+      maxY = minY + villagerImg.height * sizeParam2;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+  }
+}
+
+function isMouseOverPerson3(mouseX, mouseY) {
+  switch (stageNumber) {
+    case 1:
+      sizeParam3 = 0.18;
+      minX = 0.17 * windowWidth;
+      minY = 0.4 * windowHeight;
+      maxX = minX + rebelImg.width * sizeParam3;
+      maxY = minY + rebelImg.height * sizeParam3;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+    case 2:
+      sizeParam3 = 0.16;
+      minX = 0.35 * windowWidth;
+      minY = 0.57 * windowHeight;
+      maxX = minX + rebelImg.width * sizeParam3;
+      maxY = minY + rebelImg.height * sizeParam3;
+      if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
+        return true;
+      } else {
+        return false;
+      }
+      break;
+    case 3:
+      sizeParam3 = 0.2;
+      minX = 0.2 * windowWidth;
+      minY = 0.45 * windowHeight;
+      maxX = minX + villagerImg.width * sizeParam3;
+      maxY = minY + villagerImg.height * sizeParam3;
       if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
         return true;
       } else {
