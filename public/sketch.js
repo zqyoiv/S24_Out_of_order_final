@@ -1,10 +1,11 @@
-let bgImg;       // Variable for the background image
-let priestessImg;  // Variable for the top left image
-let villagerImg; // Variable for the top right image
-let rebelImg; // Variable for the bottom center image
-
 let stageNumber = 0;
 let totalNumberOfStages = 5;
+let activePersonIndex = 0;
+
+let bgImg1, bgImg2, bgImg3, potImg;
+let bgImg1Gray, bgImg2Gray, bgImg3Gray;
+let priestessImg, villagerImg, rebelImg;
+let priestessImgGray, villagerImgGray, rebelImgGray; 
 
 function preload() {
   // Preload images
@@ -12,9 +13,17 @@ function preload() {
   bgImg2 = loadImage('./asset/bg2.png');
   bgImg3 = loadImage('./asset/bg3.png');
   potImg = loadImage('./asset/pot.gif');
+  bgImg1Gray = loadImage('./asset/bg1.png');
+  bgImg2Gray = loadImage('./asset/bg2.png')
+  bgImg3Gray = loadImage('./asset/bg3.png');
+
   priestessImg = loadImage('./asset/p1.png');
   villagerImg = loadImage('./asset/p2.png');
   rebelImg = loadImage('./asset/p3.png');
+  priestessImgGray = loadImage('./asset/p1.png');
+  villagerImgGray = loadImage('./asset/p2.png');
+  rebelImgGray = loadImage('./asset/p3.png');
+
   sounds_piestess = [loadSound("./asset/sound_real/priestess_1.mp3"), 
                      loadSound("./asset/sound_real/priestess_1.mp3"), 
                      loadSound("./asset/sound_real/priestess_3.mp3")];
@@ -29,6 +38,13 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight); // Create a canvas
   imageMode(CORNER); // Set image mode to CORNER for easier positioning
+
+  bgImg1Gray.filter(GRAY);
+  bgImg2Gray.filter(GRAY);
+  bgImg3Gray.filter(GRAY);
+  priestessImgGray.filter(GRAY);
+  villagerImgGray.filter(GRAY);
+  rebelImgGray.filter(GRAY);
 }
 
 function draw() {
@@ -45,14 +61,11 @@ function draw() {
   }
 }
 
-
-
-function isMouseOverIntro() {
-
-}
-
 function drawStart() {
-  background(bgImg1);
+  background(0);
+  tint(255, 127);
+  image(bgImg1, 0, 0, width, height);
+
   textSize(26); // Set the text size
   textAlign(CENTER, CENTER); 
   let line1 = "Three voices simmer from a pot.";
@@ -74,52 +87,137 @@ function drawStart() {
 
   // pot image
   sizeParam = 0.6;
+  tint(255, 255);
   image(potImg, 0.5 * width - potImg.width * sizeParam / 2, 
                 0.6 * height - potImg.height * sizeParam / 2, 
         potImg.width * sizeParam, potImg.height * sizeParam);
 }
 
-function drawStage1() {
-  background(bgImg1);
+function drawStage1() {  
+  background(0);
+  tint(255, 127);
+  if (activePersonIndex > 0) {
+    image(bgImg1Gray, 0, 0, windowWidth, windowHeight);
+  } else {
+    image(bgImg1, 0, 0, windowWidth, windowHeight);
+  }
+  tint(255, 255);
+  
   sizeParam1 = 0.16;
   sizeParam2 = 0.15;
   sizeParam3 = 0.18;
-  image(priestessImg, 0.73 * windowWidth, 0.35 * windowHeight, 
-        priestessImg.width * sizeParam1, priestessImg.height * sizeParam1);
-  image(villagerImg, 0.55 * windowWidth, 0.54 * windowHeight, 
-        villagerImg.width * sizeParam2, villagerImg.height * sizeParam2);
-  image(rebelImg, 0.17 * windowWidth, 0.4 * windowHeight,
-       rebelImg.width * sizeParam3, rebelImg.height * sizeParam3);
+  if (activePersonIndex == 0) {
+    pImg = priestessImg;
+    vImg = villagerImg;
+    rImg = rebelImg;
+  } else if (activePersonIndex == 1) {
+    pImg = priestessImg;
+    vImg = villagerImgGray;
+    rImg = rebelImgGray;
+  } else if (activePersonIndex == 2) {
+    pImg = priestessImgGray;
+    vImg = villagerImg;
+    rImg = rebelImgGray;
+  } else if (activePersonIndex == 3) {
+    pImg = priestessImgGray;
+    vImg = villagerImgGray;
+    rImg = rebelImg;
+  }
+  
+  image(pImg, 0.73 * windowWidth, 0.35 * windowHeight, 
+        pImg.width * sizeParam1, pImg.height * sizeParam1);
+  image(vImg, 0.55 * windowWidth, 0.54 * windowHeight, 
+        vImg.width * sizeParam2, vImg.height * sizeParam2);
+  image(rImg, 0.17 * windowWidth, 0.4 * windowHeight,
+        rImg.width * sizeParam3, rImg.height * sizeParam3);
 }
 
 function drawStage2() {
-  background(bgImg2);
+  background(0);
+  tint(255, 127);
+  if (activePersonIndex > 0) {
+    image(bgImg2Gray, 0, 0, windowWidth, windowHeight);
+  } else {
+    image(bgImg2, 0, 0, windowWidth, windowHeight);
+  }
+  tint(255, 255);
+
   sizeParam1 = 0.18;
   sizeParam2 = 0.2;
   sizeParam3 = 0.16;
-  image(priestessImg, 0.1 * windowWidth, 0.24 * windowHeight, 
-    priestessImg.width * sizeParam1, priestessImg.height * sizeParam1);
-  image(villagerImg, 0.65 * windowWidth, 0.15 * windowHeight, 
-    villagerImg.width * sizeParam2, villagerImg.height * sizeParam2);
-  image(rebelImg, 0.35 * windowWidth, 0.57 * windowHeight,
-    rebelImg.width * sizeParam3, rebelImg.height * sizeParam3);
+
+  if (activePersonIndex == 0) {
+    pImg = priestessImg;
+    vImg = villagerImg;
+    rImg = rebelImg;
+  } else if (activePersonIndex == 1) {
+    pImg = priestessImg;
+    vImg = villagerImgGray;
+    rImg = rebelImgGray;
+  } else if (activePersonIndex == 2) {
+    pImg = priestessImgGray;
+    vImg = villagerImg;
+    rImg = rebelImgGray;
+  } else if (activePersonIndex == 3) {
+    pImg = priestessImgGray;
+    vImg = villagerImgGray;
+    rImg = rebelImg;
+  }
+
+  image(pImg, 0.1 * windowWidth, 0.24 * windowHeight, 
+    pImg.width * sizeParam1, pImg.height * sizeParam1);
+  image(vImg, 0.65 * windowWidth, 0.15 * windowHeight, 
+    vImg.width * sizeParam2, vImg.height * sizeParam2);
+  image(rImg, 0.35 * windowWidth, 0.57 * windowHeight,
+    rImg.width * sizeParam3, rImg.height * sizeParam3);
 }
 
 function drawStage3() {
-  background(bgImg3);
+  background(0);
+  tint(255, 127);
+  if (activePersonIndex > 0) {
+    image(bgImg2Gray, 0, 0, windowWidth, windowHeight);
+  } else {
+    image(bgImg2, 0, 0, windowWidth, windowHeight);
+  }
+  tint(255, 255);
+
   sizeParam1 = 0.16;
   sizeParam2 = 0.2;
   sizeParam3 = 0.2;
-  image(priestessImg, 0.42 * windowWidth, 0.07 * windowHeight, 
-    priestessImg.width * sizeParam1, priestessImg.height * sizeParam1);
-  image(villagerImg, 0.65 * windowWidth, 0.15 * windowHeight, 
-    villagerImg.width * sizeParam2, villagerImg.height * sizeParam2);
-  image(rebelImg, 0.2 * windowWidth, 0.45 * windowHeight,
-    rebelImg.width * sizeParam3, rebelImg.height * sizeParam3);
+
+  if (activePersonIndex == 0) {
+    pImg = priestessImg;
+    vImg = villagerImg;
+    rImg = rebelImg;
+  } else if (activePersonIndex == 1) {
+    pImg = priestessImg;
+    vImg = villagerImgGray;
+    rImg = rebelImgGray;
+  } else if (activePersonIndex == 2) {
+    pImg = priestessImgGray;
+    vImg = villagerImg;
+    rImg = rebelImgGray;
+  } else if (activePersonIndex == 3) {
+    pImg = priestessImgGray;
+    vImg = villagerImgGray;
+    rImg = rebelImg;
+  }
+
+  image(pImg, 0.42 * windowWidth, 0.07 * windowHeight, 
+    pImg.width * sizeParam1, priestessImg.height * sizeParam1);
+  image(vImg, 0.65 * windowWidth, 0.15 * windowHeight, 
+    vImg.width * sizeParam2, vImg.height * sizeParam2);
+  image(rImg, 0.2 * windowWidth, 0.45 * windowHeight,
+    rImg.width * sizeParam3, rImg.height * sizeParam3);
 }
 
 function drawEnd() {
-  background(bgImg3);
+  background(0);
+  tint(255, 127);
+  image(bgImg3, 0, 0, width, height);
+  tint(255, 255);
+
   textSize(26); // Set the text size
   textAlign(CENTER, CENTER); 
   let line1 = "What do you think?";
@@ -143,7 +241,9 @@ function drawEnd() {
 
 function keyPressed() {
   if (keyCode === ENTER) {
-    nextStage();
+    if (stageNumber == 0 || stageNumber == 4) {
+      nextStage();
+    }
     stopCurrentSound();
   }
 }
@@ -167,7 +267,8 @@ function stopCurrentSound() {
 }
 
 function nextStage() {
-  stageNumber = (stageNumber+1) % totalNumberOfStages;
+  stageNumber = (stageNumber + 1) % totalNumberOfStages;
+  activePersonIndex = 0;
 }
 
 function mouseMoved() {
@@ -204,14 +305,18 @@ function mousePressed() {
     if (isMouseOverPerson1(mouseX, mouseY)) {
       stopCurrentSound();
       playPersonStory(1, stageNumber);
+      activePersonIndex = 1;
     } else if (isMouseOverPerson2(mouseX, mouseY)) {
       stopCurrentSound();
       playPersonStory(2, stageNumber);
+      activePersonIndex = 2;
     } else if (isMouseOverPerson3(mouseX, mouseY)) {
       stopCurrentSound();
       playPersonStory(3, stageNumber);
+      activePersonIndex = 3;
     }
   }
+  console.log(`Stage: ${stageNumber}, Active Person: ${activePersonIndex}`);
 }
 
 function isMouseOverPot(mouseX, mouseY) {
