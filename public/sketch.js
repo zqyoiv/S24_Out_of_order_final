@@ -132,6 +132,16 @@ function drawStage1() {
         vImg.width * sizeParam2, vImg.height * sizeParam2);
   image(rImg, 0.17 * windowWidth, 0.4 * windowHeight,
         rImg.width * sizeParam3, rImg.height * sizeParam3);
+  
+  tSize = 20;
+  padSize = tSize + 4;
+  textSize(tSize); // Set the text size
+  let line1 = "Chapter 1: The pot";
+  fill(255);
+  rect(0.16 * width - textWidth(line1) / 2 - padSize, 0.12 * height - padSize, 
+       textWidth(line1) + padSize * 2,  padSize * 2);
+  fill(0);
+  text(line1, 0.16 * width, 0.12 * height);
 }
 
 function drawStage2() {
@@ -183,10 +193,21 @@ function drawStage2() {
   fill(255);
   rect(0.73 * width - textWidth(line1) / 2 - padSize, 0.84 * height - padSize, 
        textWidth(line1) + padSize * 2,  padSize * 3);
-
   fill(0);
   text(line1, 0.73 * width, 0.84 * height);
   text(line2, 0.73 * width, 0.84 * height + padSize);
+
+
+  // Chapter 2: The pot
+  tSize = 20;
+  padSize = tSize + 4;
+  textSize(tSize); // Set the text size
+  let line3 = "Chapter 2: The History";
+  fill(255);
+  rect(0.16 * width - textWidth(line3) / 2 - padSize, 0.12 * height - padSize, 
+       textWidth(line3) + padSize * 2,  padSize * 2);
+  fill(0);
+  text(line3, 0.16 * width, 0.12 * height);
 }
 
 function drawStage3() {
@@ -238,10 +259,20 @@ function drawStage3() {
   fill(255);
   rect(0.73 * width - textWidth(line1) / 2 - padSize, 0.84 * height - padSize, 
        textWidth(line1) + padSize * 2,  padSize * 3);
-
   fill(0);
   text(line1, 0.73 * width, 0.84 * height);
   text(line2, 0.73 * width, 0.84 * height + padSize);
+
+  // Chapter 3: The Night
+  tSize = 20;
+  padSize = tSize + 4;
+  textSize(tSize); // Set the text size
+  let line3 = "Chapter 3: The Night";
+  fill(255);
+  rect(0.16 * width - textWidth(line3) / 2 - padSize, 0.12 * height - padSize, 
+       textWidth(line3) + padSize * 2,  padSize * 2);
+  fill(0);
+  text(line3, 0.16 * width, 0.12 * height);
 }
 
 function drawEnd() {
@@ -327,6 +358,10 @@ function mousePressed() {
   let xPercent = (mouseX / windowWidth) * 100;  
   let yPercent = (mouseY / windowHeight) * 100; 
   console.log(`X: ${xPercent.toFixed(2)}%, Y: ${yPercent.toFixed(2)}%`);
+
+  if (activePersonIndex > 0) {
+    return;
+  }
   
   // Start and End stage.
   if (stageNumber == 0 || stageNumber == 4) {
