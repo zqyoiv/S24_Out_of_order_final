@@ -11,6 +11,7 @@ function preload() {
   bgImg1 = loadImage('./asset/bg1.jpeg');
   bgImg2 = loadImage('./asset/bg2.jpeg');
   bgImg3 = loadImage('./asset/bg3.jpeg');
+  potImg = loadImage('./asset/pot.gif');
   priestessImg = loadImage('./asset/p1.png');
   villagerImg = loadImage('./asset/p2.png');
   rebelImg = loadImage('./asset/p3.png');
@@ -21,7 +22,7 @@ function preload() {
                     loadSound("./asset/sound_real/villager_2.mp3"), 
                     loadSound("./asset/sound_real/villager_3.mp3")];
   sounds_robinhood = [loadSound("./asset/sound_real/revolt_1.mp3"), 
-                      // loadSound("./asset/sound_real/revolt_2.mp3"), 
+                      loadSound("./asset/sound_real/revolt_2.mp3"), 
                       loadSound("./asset/sound_real/revolt_3.mp3")];
 }
 
@@ -70,6 +71,10 @@ function drawStart() {
   text(line3, width / 2, height / 4 + 64);
   text(line4, width / 2, height / 4 + 96);
   text(line5, width / 2, height / 4 + 128);
+
+  // pot
+  image(potImg, 0.38 * width, 0.4 * height,
+        potImg.width * 0.6, potImg.height * 0.6);
 }
 
 function drawStage1() {
@@ -127,6 +132,9 @@ function drawEnd() {
   text(line1, width / 2, height / 4);
   text(line2, width / 2, height / 4 + 32);
   text(line3, width / 2, height / 4 + 64);
+
+  image(potImg, 0.36 * width, 0.33 * height,
+    potImg.width * 0.6, potImg.height * 0.6);
 }
 
 function keyPressed() {
