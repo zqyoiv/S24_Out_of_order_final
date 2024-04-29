@@ -2,13 +2,15 @@ let stageNumber = 0;
 let totalNumberOfStages = 5;
 let activePersonIndex = 0;
 
-let bgImg1, bgImg2, bgImg3, potImg;
+let bgImg1, bgImg2, bgImg3, potImg, bg_start, bg_end;
 let bgImg1Gray, bgImg2Gray, bgImg3Gray;
 let priestessImg, villagerImg, rebelImg;
 let priestessImgGray, villagerImgGray, rebelImgGray; 
 
 function preload() {
   // Preload images
+  bg_start = loadImage('./asset/bg_start.png');
+  bg_end = loadImage('./asset/bg_end.png');
   bgImg1 = loadImage('./asset/bg1.png');
   bgImg2 = loadImage('./asset/bg2.png');
   bgImg3 = loadImage('./asset/bg3.png');
@@ -64,7 +66,7 @@ function draw() {
 function drawStart() {
   background(0);
   tint(255, 127);
-  image(bgImg1, 0, 0, width, height);
+  image(bg_start, 0, 0, width, height);
 
   textSize(26); // Set the text size
   textAlign(CENTER, CENTER); 
@@ -215,7 +217,7 @@ function drawStage3() {
 function drawEnd() {
   background(0);
   tint(255, 127);
-  image(bgImg3, 0, 0, width, height);
+  image(bg_end, 0, 0, width, height);
   tint(255, 255);
 
   textSize(26); // Set the text size
