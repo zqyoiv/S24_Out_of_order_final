@@ -172,6 +172,21 @@ function drawStage2() {
     vImg.width * sizeParam2, vImg.height * sizeParam2);
   image(rImg, 0.35 * windowWidth, 0.57 * windowHeight,
     rImg.width * sizeParam3, rImg.height * sizeParam3);
+
+  tSize = 20;
+  padSize = tSize + 4;
+  textSize(tSize); // Set the text size
+  textAlign(CENTER, CENTER); 
+  let line1 = "Would you like to continue hearing their story,";
+  let line2 = "or lend your ears to another side?";
+
+  fill(255);
+  rect(0.73 * width - textWidth(line1) / 2 - padSize, 0.84 * height - padSize, 
+       textWidth(line1) + padSize * 2,  padSize * 3);
+
+  fill(0);
+  text(line1, 0.73 * width, 0.84 * height);
+  text(line2, 0.73 * width, 0.84 * height + padSize);
 }
 
 function drawStage3() {
@@ -212,6 +227,21 @@ function drawStage3() {
     vImg.width * sizeParam2, vImg.height * sizeParam2);
   image(rImg, 0.2 * windowWidth, 0.45 * windowHeight,
     rImg.width * sizeParam3, rImg.height * sizeParam3);
+
+  tSize = 20;
+  padSize = tSize + 4;
+  textSize(tSize); // Set the text size
+  textAlign(CENTER, CENTER); 
+  let line1 = "Would you like to continue hearing their story,";
+  let line2 = "or lend your ears to another side?";
+
+  fill(255);
+  rect(0.73 * width - textWidth(line1) / 2 - padSize, 0.84 * height - padSize, 
+       textWidth(line1) + padSize * 2,  padSize * 3);
+
+  fill(0);
+  text(line1, 0.73 * width, 0.84 * height);
+  text(line2, 0.73 * width, 0.84 * height + padSize);
 }
 
 function drawEnd() {
