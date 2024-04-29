@@ -1,18 +1,19 @@
 let bgImg;       // Variable for the background image
-let topLeftImg;  // Variable for the top left image
-let topRightImg; // Variable for the top right image
-let bottomCenterImg; // Variable for the bottom center image
+let priestessImg;  // Variable for the top left image
+let villagerImg; // Variable for the top right image
+let rebelImg; // Variable for the bottom center image
 
 let stageNumber = 0;
+let totalNumberOfStages = 5;
 
 function preload() {
   // Preload images
   bgImg1 = loadImage('./asset/bg1.jpeg');
   bgImg2 = loadImage('./asset/bg2.jpeg');
   bgImg3 = loadImage('./asset/bg3.jpeg');
-  topLeftImg = loadImage('./asset/p1.jpg');
-  topRightImg = loadImage('./asset/p2.jpg');
-  bottomCenterImg = loadImage('./asset/p3.jpg');
+  priestessImg = loadImage('./asset/p1.png');
+  villagerImg = loadImage('./asset/p2.png');
+  rebelImg = loadImage('./asset/p3.png');
   sounds_piestess = [loadSound("./asset/sound_real/priestess_1.mp3"), 
                      loadSound("./asset/sound_real/priestess_1.mp3"), 
                      loadSound("./asset/sound_real/priestess_3.mp3")];
@@ -25,36 +26,108 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800, 600); // Create a canvas
+  createCanvas(windowWidth, windowHeight); // Create a canvas
   imageMode(CORNER); // Set image mode to CORNER for easier positioning
 }
 
 function draw() {
   if (stageNumber == 0) {
-    stageDraw(bgImg1);
+    drawStart();
   } else if (stageNumber == 1) {
-    stageDraw(bgImg2);
+    drawStage1();
   } else if (stageNumber == 2) {
-    stageDraw(bgImg3);
+    drawStage2();
+  } else if (stageNumber == 3) {
+    drawStage3();
+  } else if (stageNumber == 4) {
+    drawEnd();
   }
 }
 
-function stageDraw(bgimg) {
-  background(bgimg); // Display the background image
 
-  // Display the top left image at position (0, 0)
-  image(topLeftImg, 0, 0, topLeftImg.width * 0.5, topLeftImg.height * 0.5);
 
-  // Display the top right image at the top right corner
-  // Adjusted by the width of the topRightImg to align it properly
-  image(topRightImg, width - topRightImg.width, 0, topRightImg.width * 0.5, topRightImg.height * 0.5);
+function isMouseOverIntro() {
 
-  // Display the bottom center image at the bottom center of the canvas
-  // Adjust the X position by half of the image's width for proper centering
-  image(bottomCenterImg, (width - bottomCenterImg.width) / 2, height - bottomCenterImg.height,
-       bottomCenterImg.width * 0.5, bottomCenterImg.height * 0.5);
 }
 
+function drawStart() {
+  background(bgImg1);
+  textSize(26); // Set the text size
+  textAlign(CENTER, CENTER); 
+  let line1 = "Three voices simmer from a pot.";
+  let line2 = "What’s true? What’s false?";
+  let line3 = "Is there even such a thing as truth?";
+  let line4 = "Or are they all just stories?";
+  let line5 = "Tap the pot to explore.";
+
+  fill(255);
+  rect(width / 2 - textWidth(line3) / 2 - 32, height / 4 - 32, 
+       textWidth(line3) + 64,  32 * 6);
+
+  fill(0);
+  text(line1, width / 2, height / 4);
+  text(line2, width / 2, height / 4 + 32);
+  text(line3, width / 2, height / 4 + 64);
+  text(line4, width / 2, height / 4 + 96);
+  text(line5, width / 2, height / 4 + 128);
+}
+
+function drawStage1() {
+  background(bgImg1);
+  sizeParam1 = 0.16;
+  sizeParam2 = 0.15;
+  sizeParam3 = 0.18;
+  image(priestessImg, 0.73 * windowWidth, 0.35 * windowHeight, 
+        priestessImg.width * sizeParam1, priestessImg.height * sizeParam1);
+  image(villagerImg, 0.55 * windowWidth, 0.54 * windowHeight, 
+        villagerImg.width * sizeParam2, villagerImg.height * sizeParam2);
+  image(rebelImg, 0.17 * windowWidth, 0.4 * windowHeight,
+       rebelImg.width * sizeParam3, rebelImg.height * sizeParam3);
+}
+
+function drawStage2() {
+  background(bgImg2);
+  sizeParam1 = 0.18;
+  sizeParam2 = 0.2;
+  sizeParam3 = 0.16;
+  image(priestessImg, 0.1 * windowWidth, 0.24 * windowHeight, 
+    priestessImg.width * sizeParam1, priestessImg.height * sizeParam1);
+  image(villagerImg, 0.65 * windowWidth, 0.15 * windowHeight, 
+    villagerImg.width * sizeParam2, villagerImg.height * sizeParam2);
+  image(rebelImg, 0.35 * windowWidth, 0.57 * windowHeight,
+    rebelImg.width * sizeParam3, rebelImg.height * sizeParam3);
+}
+
+function drawStage3() {
+  background(bgImg3);
+  sizeParam1 = 0.16;
+  sizeParam2 = 0.2;
+  sizeParam3 = 0.2;
+  image(priestessImg, 0.42 * windowWidth, 0.07 * windowHeight, 
+    priestessImg.width * sizeParam1, priestessImg.height * sizeParam1);
+  image(villagerImg, 0.65 * windowWidth, 0.15 * windowHeight, 
+    villagerImg.width * sizeParam2, villagerImg.height * sizeParam2);
+  image(rebelImg, 0.2 * windowWidth, 0.45 * windowHeight,
+    rebelImg.width * sizeParam3, rebelImg.height * sizeParam3);
+}
+
+function drawEnd() {
+  background(bgImg3);
+  textSize(26); // Set the text size
+  textAlign(CENTER, CENTER); 
+  let line1 = "What do you think?";
+  let line2 = "Want to explore the stories again?";
+  let line3 = "Tap the pot to return to the voices.";
+
+  fill(255);
+  rect(width / 2 - textWidth(line2) / 2 - 32, height / 4 - 32, 
+       textWidth(line2) + 64,  32 * 4);
+
+  fill(0);
+  text(line1, width / 2, height / 4);
+  text(line2, width / 2, height / 4 + 32);
+  text(line3, width / 2, height / 4 + 64);
+}
 
 function keyPressed() {
   if (keyCode === ENTER) {
@@ -82,26 +155,41 @@ function stopCurrentSound() {
 }
 
 function nextStage() {
-  stageNumber = (stageNumber+1) % 3;
+  stageNumber = (stageNumber+1) % totalNumberOfStages;
 }
 
 function mouseMoved() {
-  // when the mouse is hover over 3 person image, show hand cursor and handle clicking event.
-  if (isMouseOverPerson(1, mouseX, mouseY) ||
-    isMouseOverPerson(2, mouseX, mouseY) ||
-    isMouseOverPerson(3, mouseX, mouseY)) {
-    cursor(HAND);
+  if (stageNumber == 0) {
+    if (isMouseOverIntro(mouseX, mouseY)) {
+      cursor(HAND);
+    } else {
+      cursor(ARROW);
+    }
   } else {
-    cursor(ARROW);
+    // when the mouse is hover over 3 person image, show hand cursor and handle clicking event.
+    if (isMouseOverPerson(1, mouseX, mouseY) ||
+      isMouseOverPerson(2, mouseX, mouseY) ||
+      isMouseOverPerson(3, mouseX, mouseY)) {
+      cursor(HAND);
+    } else {
+      cursor(ARROW);
+    }
   }
 }
 
 function mousePressed() {
+  let xPercent = (mouseX / windowWidth) * 100;  
+  let yPercent = (mouseY / windowHeight) * 100; 
+  console.log(`X: ${xPercent.toFixed(2)}%, Y: ${yPercent.toFixed(2)}%`);
+  
   if (isMouseOverPerson(1, mouseX, mouseY)) {
+    stopCurrentSound();
     playPersonStory(1, stageNumber);
   } else if (isMouseOverPerson(2, mouseX, mouseY)) {
+    stopCurrentSound();
     playPersonStory(2, stageNumber);
   } else if (isMouseOverPerson(3, mouseX, mouseY)) {
+    stopCurrentSound();
     playPersonStory(3, stageNumber);
   }
 }
@@ -109,26 +197,26 @@ function mousePressed() {
 function isMouseOverPerson(personIndex, mouseX, mouseY) {
   switch (personIndex) {
     case 1:
-      if (mouseX > 0 && mouseX < topLeftImg.width * 0.5 &&
-        mouseY > 0 && mouseY < topLeftImg.height * 0.5) {
+      if (mouseX > 0 && mouseX < priestessImg.width * 0.5 &&
+        mouseY > 0 && mouseY < priestessImg.height * 0.5) {
         return true;
       } else {
         return false;
       }
       break;
     case 2:
-      if (mouseX > width - topRightImg.width && mouseX < width - topRightImg.width * 0.5 &&
-        mouseY > 0 && mouseY < topRightImg.height * 0.5) {
+      if (mouseX > width - villagerImg.width && mouseX < width - villagerImg.width * 0.5 &&
+        mouseY > 0 && mouseY < villagerImg.height * 0.5) {
         return true;
       } else {
         return false;
       }
       break;
     case 3:
-      minX = (width - bottomCenterImg.width) / 2;
-      minY = height - bottomCenterImg.height;
-      maxX = minX + bottomCenterImg.width * 0.5;
-      maxY = minY + bottomCenterImg.height * 0.5;
+      minX = (width - rebelImg.width) / 2;
+      minY = height - rebelImg.height;
+      maxX = minX + rebelImg.width * 0.5;
+      maxY = minY + rebelImg.height * 0.5;
       if (mouseX > minX && mouseX < maxX && mouseY > minY && mouseY < maxY) {
         return true;
       } else {
@@ -142,15 +230,15 @@ function playPersonStory(personIndex, currentStage) {
   switch (personIndex) {
     case 1: // piestess
       switch (currentStage) {
-        case 0:
+        case 1:
           sounds_piestess[0].play();
           sounds_piestess[0].onended(nextStage);
           break;
-        case 1:
+        case 2:
           sounds_piestess[1].play();
           sounds_piestess[1].onended(nextStage);
           break;
-        case 2:
+        case 3:
           sounds_piestess[2].play();
           sounds_piestess[2].onended(nextStage);
           break;
@@ -158,15 +246,15 @@ function playPersonStory(personIndex, currentStage) {
       break;
     case 2: // village
       switch (currentStage) {
-        case 0:
+        case 1:
           sounds_village[0].play();
           sounds_village[0].onended(nextStage);
           break;
-        case 1:
+        case 2:
           sounds_village[1].play();
           sounds_village[1].onended(nextStage);
           break;
-        case 2:
+        case 3:
           sounds_village[2].play();
           sounds_village[2].onended(nextStage);
           break;
@@ -174,19 +262,23 @@ function playPersonStory(personIndex, currentStage) {
       break;
     case 3: // robinhood
       switch (currentStage) {
-        case 0:
+        case 1:
           sounds_robinhood[0].play();
           sounds_robinhood[0].onended(nextStage);
           break;
-        case 1:
+        case 2:
           sounds_robinhood[1].play();
           sounds_robinhood[1].onended(nextStage);
           break;
-        case 2:
+        case 3:
           sounds_robinhood[2].play();
           sounds_robinhood[2].onended(nextStage);
           break;
       }
       break;
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight); // Adjust canvas size when window is resized
 }
